@@ -116,3 +116,32 @@ with mlflow.start_run():
     print(f"Best params: {grid_search.best_params_}")
     print(f"Best CV accuracy score: {grid_search.best_score_:.3f}")
 ```
+
+## Model Registore
+<p>
+<h3>Part 1:</h3>
+- How to Assign the "Production" Alias in the UI
+Since stages are gone, you now use Aliases as a mutable pointer (like a Git branch tag) to mark which version is your production model. <br>
+- Open the MLflow UI and click the Models tab at the top.
+Click on your specific model repository name. <br>
+- In the Versions table, click on the specific Version number (e.g., Version 2) you want to use.
+- Locate the Aliases section at the top of the version page and click Add.
+- Type a clean, standard identifier like production or champion and click save.
+
+Note: An alias can only point to one version at a time. Assigning production to Version 2 automatically strips it away from Version 1.
+
+<h3>Part 2: How to Query and Use It</h3>
+
+```python 
+import mlflow
+import pandas as pd
+
+# Use the "@" syntax followed by your custom alias name
+model_uri = "models:/<model_name>@<alias_name>"
+
+# MLflow automatically resolves this to the correct version number
+model = mlflow.pyfunc.load_model(model_uri)
+
+predictions = model.predict(data)
+```
+</p>
