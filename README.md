@@ -1,7 +1,8 @@
 # MLOPs-ModelVersioningAndRegistry
 MLflow related work
-``` python 
+### Without Autolog
 
+``` python 
 import mlflow
 import mlflow.sklearn
 
@@ -34,5 +35,28 @@ with mlflow.start_run():
 
     print(f"Elastic net Params: alpha: {alpha}, l1_ratio: {l1_ratio}")
     print(f"Elastic net metric: rmse:{rmse}, mae:{mae},r2:{r2}")
-
 ```
+
+### With Autolog
+```python
+import mlflow
+import mlflow.sklearn
+
+mlflow.set_tracking_uri("http://127.0.0.1:5000")            # Also you can set cloud URI path Mention in mlflow.md
+mlflow.set_experiment("Wine-Quality")
+
+mlflow.autolog()
+
+with mlflow.start_run():
+
+    lr = ElasticNet(alpha=alpha, l1_ratio=alpha)
+    lr.fit(train_x,train_y)
+
+    pred = lr.predict(test_x)
+
+    rmse,mae,r2 = evaluate(test_y,pred)
+
+    print(f"Elastic net Params: alpha: {alpha}, l1_ratio: {l1_ratio}")
+    print(f"Elastic net metric: rmse:{rmse}, mae:{mae},r2:{r2}")
+```
+
