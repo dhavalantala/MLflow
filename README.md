@@ -9,10 +9,11 @@ import mlflow.sklearn
 mlflow.set_tracking_uri("http://127.0.0.1:5000")            # Also you can set cloud URI path Mention in mlflow.md
 mlflow.set_experiment("Wine-Quality")
 
-```python
+
 # some time its enter into infinite loop remove both and set
-mlflow server --host 127.0.0.1 --port 5000
-```
+# `bash`
+# mlflow server --host 127.0.0.1 --port 5000
+
 
 
 alpha=0.9
